@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "storagename": {
+        "defaultValue": "20210802templatetest",
+        "type": "String"
+      },
+      "userassignedmicmk": {
+        "defaultValue": "/subscriptions/af13be3e-55c8-4bb8-974e-ccd023ca4f21/resourcegroups/0728XTCMK/providers/Microsoft.ManagedIdentity/userAssignedIdentities/xtcmkFIC01",
+        "type": "String"
+      },
+      "cmkfederatedclientId" : {
+        "type" : "string",
+        "defaultValue": "e5658e5f-ccb7-47ac-9e07-cccbb66abafa"
+      },
+      "keyVaultURL" : 
+      {
+        "type": "string",
+        "defaultValue" : "https://contosovault1122.vault.azure.net"
+      },
+      "CMKkeyName" : {
+        "type": "string",
+        "defaultValue" : "mastercmkkey"
+      } 
+    },
+    "variables": {},
+    "resources": [
+      {
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2021-05-01",
+        "name": "[parameters('storagename')]",
+        "location": "eastus2euap",
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "kind": "StorageV2",
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "[parameters('userassignedmicmk')]": {}
+          }
+        },
+        "properties": {
+          "minimumTlsVersion": "TLS1_2",
+          "allowBlobPublicAccess": true,
+          "allowSharedKeyAccess": true,
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [],
+            "ipRules": [],
+            "defaultAction": "Allow"
+          },
+          "supportsHttpsTrafficOnly": true,
+          "encryption": {
+            "identity": {
+              "userAssignedIdentity": "[parameters('userassignedmicmk')]",
+              "federatedIdentityClientId": "[parameters('cmkfederatedclientId')]"
+            },
+            "keyvaultproperties": {
+              "keyvaulturi": "[parameters('keyVaultURL')]",
+              "keyname": "[parameters('CMKkeyName')]"
+            },
+            "services": {
+              "file": {
+                "keyType": "Account",
+                "enabled": true
+              },
+              "blob": {
+                "keyType": "Account",
+                "enabled": true
+              }
+            },
+            "keySource": "Microsoft.Keyvault"
+          },
+          "accessTier": "Hot"
+        }
+      }      
+    ]
+  }
