@@ -7,17 +7,17 @@
         "type": "String"
       },
       "userassignedmicmk": {
-        "defaultValue": "/subscriptions/af13be3e-55c8-4bb8-974e-ccd023ca4f21/resourcegroups/0728XTCMK/providers/Microsoft.ManagedIdentity/userAssignedIdentities/xtcmkFIC01",
+        "defaultValue": "/subscriptions/187de015-bb09-4bb7-9376-337ff2023532/resourceGroups/XTCMKDemo/providers/Microsoft.ManagedIdentity/userAssignedIdentities/xtcmkFIC",
         "type": "String"
       },
       "cmkfederatedclientId" : {
         "type" : "string",
-        "defaultValue": "e5658e5f-ccb7-47ac-9e07-cccbb66abafa"
+        "defaultValue": "da442cb8-893a-450a-9b2f-fc7c5d568422"
       },
       "keyVaultURL" : 
       {
         "type": "string",
-        "defaultValue" : "https://contosovault1122.vault.azure.net"
+        "defaultValue" : "https://cmk-keys-oak-poc-kv.vault.azure.net/"
       },
       "CMKkeyName" : {
         "type": "string",
@@ -30,7 +30,7 @@
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2021-05-01",
         "name": "[parameters('storagename')]",
-        "location": "eastus2euap",
+        "location": " eastus2",
         "sku": {
           "name": "Standard_LRS",
           "tier": "Standard"
