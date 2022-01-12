@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storagename": {
-        "defaultValue": "20210802templatetest",
+        "defaultValue": "20220113cxcmktest1",
         "type": "String"
       },
       "userassignedmicmk": {
