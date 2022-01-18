@@ -17,3 +17,9 @@ jobs:
     
     - run: |
         az webapp list --query "[?state=='Running']"
+        
+    - name: 'Run Azure CLI commands'
+      run: |
+          az account show
+          az group list
+          pwd 
