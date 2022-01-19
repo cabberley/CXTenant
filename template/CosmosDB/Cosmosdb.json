@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+     "SubscriptionService": {
+      "type": "string",
+      "metadata": {
+        "description": "Subscription ID for the Service Subscription"
+      },
+      "defaultValue": "00000000-0000-0000-0000-000000000000"
+    }
+
+  
+
+
+{ 
+  "kind": "GlobalDocumentDB",
+  "location": "East US 2",
+  "identity": {
+    "type": "UserAssigned", 
+    "userAssignedIdentities": { 
+      "/subscriptions/[parameters('SubscriptionService')]/resourcegroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/my-identity": {} 
+    }
+  } 
+  "properties": { 
+    "locations": [ 
+      { 
+        "locationName": " East US 2",
+        "failoverPriority": 0,
+        "isZoneRedundant": false 
+      } 
+    ], 
+  "databaseAccountOfferType": "Standard",
+  "keyVaultKeyUri": " https://my-vault.vault.azure.com/keys/my-key ",
+  "defaultIdentity": "UserAssignedIdentity=/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/my-identity&FederatedClientId=00000000-0000-0000-0000-000000000000" 
+} 
+}
