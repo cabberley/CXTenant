@@ -1,12 +1,12 @@
 # Phase 1 - Service Provider configures identities
 
 # List of Parameters to modify for each deployment
-    set subscriptionService = "Chris VStudio Sub"      # Service Provider Subscription
-    set appName="XTCMKDemoApp1"      # Service PRovider Application Name to Register
-    set rgNameService="XTCMKDemo1"      # Resource Group to deploy User-Assigned Managed IDentity to
-    set locationService="eastus2euap"      # This is the Azure canary.
-    set locationService="eastus2"
-    set uamiName="xtcmkFIC1"     #name of User-Assigned Managed IDentity
+    subscriptionService="Chris VStudio Sub"      # Service Provider Subscription
+    appName="XTCMKDemoApp1"      # Service PRovider Application Name to Register
+    rgNameService="XTCMKDemo"      # Resource Group to deploy User-Assigned Managed IDentity to
+    locationService="eastus2euap"      # This is the Azure canary.
+    locationService="eastus2"
+    uamiName="xtcmkFIC1"     #name of User-Assigned Managed IDentity
 
 # Step - 0 Login to Azure and set subscription to use for Service Provider side
     #az login # not needed if running from Portal Bash
@@ -17,7 +17,7 @@
     echo "Logged in as username = $username from Tenant = $tenantId using subscrtiption = $subscriptionService"
 
 # Step 1 - Create a new Multi-tenant AAD Application registration
-
+az account
 
     # Create Multi-Tenant App registration
     appObjectId=$(az ad app create --display-name $appName --available-to-other-tenants true --query objectId --out tsv)

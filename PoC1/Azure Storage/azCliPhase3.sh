@@ -4,14 +4,15 @@
 # List of Parameters to modify for each deployment
     subscriptionService="Chris VStudio Sub"      # Service Provider Subscription
     subscriptionIdCustomer= 
-    appName="XTCMKDemoApp1"      # Service PRovider Application Name to Register
-    rgNameService="XTCMKDemo1"      # Resource Group to deploy User-Assigned Managed IDentity to
-    rgNameStorage="XTCMKDemo1"      # Resource Group to deploy User-Assigned Managed IDentity to
-     storageAccountName="xtcmk2022demo2"
+    appName="XTCMKDemoApp"      # Service PRovider Application Name to Register
+    rgNameService="XTCMKDemo"      # Resource Group to deploy User-Assigned Managed IDentity to
+    rgNameStorage="XTCMKDemo"      # Resource Group to deploy User-Assigned Managed IDentity to
+    storageAccountName="xtcmk2022demo2"
     locationService="eastus2euap"      # This is the Azure canary.
-    locationService="eastus2"
-    uamiName="xtcmkFIC1"     #name of User-Assigned Managed IDentity
+    #locationService="eastus2"
+    uamiName="xtcmkFIC"     #name of User-Assigned Managed IDentity
     keyvaultNameCustomer="https://cmk-keys-oak-poc-kv.vault.azure.net/"
+    keyvaultKeyName="mastercmkkey"
     federatedIdentityApplicationId="da442cb8-893a-450a-9b2f-fc7c5d568422" #
 
 
@@ -26,7 +27,8 @@
 uri='https://management.azure.com/subscriptions/'$subscriptionId'/resourceGroups/'$rgNameStorage'/providers/Microsoft.Storage/storageAccounts/'$storageAccountName'?api-version=2021-05-01'
 
 body='{  
-  "identity": {"type": "SystemAssigned,UserAssigned ", "userAssignedIdentities": {  
+  "identity": {"type": "SystemAssigned,UserAssigned ", 
+  "userAssignedIdentities": {  
       "/subscriptions/'$subscriptionId'/resourceGroups/'$rgNameService'/providers/Microsoft.ManagedIdentity/userAssignedIdentities/'$uamiName'": {} 
     } 
   }, 
@@ -49,16 +51,16 @@ body='{
       }, 
       "keyvaultproperties": { 
         "keyvaulturi": "'$keyvaultNameCustomer'", 
-        "keyname": "wrappingKey", 
+        "keyname": "'$keyvaultKeyName'", 
         "keyversion": "" 
       }, 
       "keySource": "Microsoft.Keyvault", 
       "identity": { 
-        "userAssignedIdentity": "/subscriptions/'$subscriptionId'/resourceGroups/'$rgNameService'/providers/Microsoft.ManagedIdentity/userAssignedIdentities/'$uamiName'" 
- 	  "federatedIdentityClientId": "'$federatedIdentityApplicationId'", 
+        "userAssignedIdentity": "/subscriptions/'$subscriptionId'/resourceGroups/'$rgNameService'/providers/Microsoft.ManagedIdentity/userAssignedIdentities/'$uamiName'",
+ 	  "federatedIdentityClientId": "'$federatedIdentityApplicationId'" 
       } 
     } 
   } 
 } '
 
-az rest --method POST --uri $uri --body $body
+az rest --method put --uri $uri --body "$body"

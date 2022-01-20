@@ -1,21 +1,21 @@
 # Phase 2 - Customer Tenant authorizes Azure Key Vault
 # List of Parameters to modify for each deployment
     subscriptionCustomer="Chris VStudio Sub"      # Customer Subscription where Key Vault will be stored
-    appId="73331241-e1e5-49d1-b39f-86e3ea0bef39"  # Needs to be provided from output from Service Side Creation script
+    appId="da442cb8-893a-450a-9b2f-fc7c5d568422"  # Needs to be provided from output from Service Side Creation script
     rgNameCustomer="CMKKeys"        # Resource Group Name to create Key Vault in
     vaultName="cxcmkvault01"      # provide a name for keyvault
     locationKeyvault="Eastus"     # for example: location='centralus'
     mastercmkkey="mastercmkkey"   # name to give the CMK key that will be generated
     
-    appName="XTCMKDemoApp1"      # Service PRovider Application Name to Register
-    rgName="XTCMKDemo1"      # Resource Group to deploy User-Assigned Managed IDentity to
+    appName="XTCMKDemoApp"      # Service PRovider Application Name to Register
+    rgName="XTCMKDemo"      # Resource Group to deploy User-Assigned Managed IDentity to
     location="eastus2euap"      # This is the Azure canary.
     location="eastus2"
-    uamiName="xtcmkFIC1"     #name of User-Assigned Managed IDentity
+    uamiName="xtcmkFIC"     #name of User-Assigned Managed IDentity
 
 # Step - 0 Login to Azure and set subscription to use for Customer side
     #az login # not needed if running from Portal Bash
-    az account set --subscription $subscriptionCustomer
+    az account set --subscription "$subscriptionCustomer"
     username=$(az account show --query user.name --out tsv)
     tenantId=$(az account show --query tenantId --out tsv)
     subscriptionId=$(az account show --query id --out tsv) 
