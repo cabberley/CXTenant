@@ -37,8 +37,8 @@
     uamiObjectId=$(az identity create --name $uamiName --resource-group $rgNameService --location $locationService --subscription $subscriptionId --query principalId --out tsv)
 
 #Step 3 - Configure user-assigned managed identity as a federated identity credential on the application
-    $uri='https://graph.microsoft.com/beta/applications/'$appObjectId'/federatedIdentityCredentials'
-    $body='{
+    uri='https://graph.microsoft.com/beta/applications/'$appObjectId'/federatedIdentityCredentials'
+    body='{
         "name":"test01",
         "issuer":"https://login.microsoftonline.com/'$tenantId'/v2.0",
         "subject":"'$uamiObjectId'",
